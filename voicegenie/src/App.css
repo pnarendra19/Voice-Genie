@@ -1,0 +1,209 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: system-ui, sans-serif;
+  background: #050b1f;
+  color: #fff;
+}
+
+.app {
+  max-width: 480px;
+  height: 100vh;
+  height: 100dvh; /* correct height on mobile browsers */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #0a1a4d, #050b1f);
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  border-bottom: 1px solid #1f2f6b;
+}
+.logo { font-size: 20px; font-weight: 700; }
+.navbar nav a {
+  color: #9db4ff;
+  margin-left: 14px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+/* Chat */
+.chat {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.bubble {
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 15px;
+  line-height: 1.4;
+}
+.bubble.user { align-self: flex-end; background: #3b6cff; border-bottom-right-radius: 4px; }
+.bubble.ai { align-self: flex-start; background: #16235a; border-bottom-left-radius: 4px; }
+
+/* Waveform */
+.waveform {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  height: 40px;
+}
+.waveform span {
+  width: 4px;
+  height: 8px;
+  background: #4da3ff;
+  border-radius: 2px;
+}
+.waveform.active span { animation: wave 0.9s ease-in-out infinite; }
+@keyframes wave {
+  0%, 100% { height: 8px; }
+  50% { height: 34px; }
+}
+.status { text-align: center; font-size: 13px; color: #9db4ff; margin-bottom: 8px; }
+
+/* Controls */
+.controls { padding: 12px 16px 20px; }
+.input-row { display: flex; gap: 8px; margin-bottom: 14px; }
+.input-row input {
+  flex: 1;
+  padding: 12px 14px;
+  border-radius: 24px;
+  border: 1px solid #1f2f6b;
+  background: #0d1740;
+  color: #fff;
+  outline: none;
+}
+.send {
+  padding: 0 18px;
+  border: none;
+  border-radius: 24px;
+  background: #3b6cff;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+.button-row { display: flex; justify-content: center; align-items: center; gap: 24px; }
+.icon-btn {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  border: 1px solid #1f2f6b;
+  background: #0d1740;
+  font-size: 20px;
+  cursor: pointer;
+}
+.mic {
+  width: 76px; height: 76px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #3b6cff, #4dd2ff);
+  font-size: 30px;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(77, 163, 255, 0.5);
+}
+.mic.on { animation: pulse 1.2s infinite; background: #ff4d6d; }
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 77, 109, 0.6); }
+  100% { box-shadow: 0 0 0 22px rgba(255, 77, 109, 0); }
+}
+
+/* ---- Step 3: speech recognition ---- */
+.lang {
+  background: #0d1740;
+  color: #fff;
+  border: 1px solid #1f2f6b;
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-size: 13px;
+}
+.transcript {
+  margin: 0 16px 8px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: #16235a;
+  color: #cfe0ff;
+  font-size: 14px;
+  text-align: center;
+}
+.transcript.error {
+  background: #4a1426;
+  color: #ffb3c1;
+}
+
+/* ---- Step 4: AI connection ---- */
+.bubble.error { background: #4a1426; color: #ffb3c1; }
+.bubble.typing { display: flex; gap: 5px; padding: 14px 16px; }
+.bubble.typing span {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #9db4ff;
+  animation: blink 1.2s infinite;
+}
+.bubble.typing span:nth-child(2) { animation-delay: 0.2s; }
+.bubble.typing span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes blink {
+  0%, 80%, 100% { opacity: 0.25; }
+  40% { opacity: 1; }
+}
+
+/* ---- Step 5: voice settings ---- */
+.nav-btn {
+  margin-left: 12px;
+  background: none;
+  border: 1px solid #1f2f6b;
+  color: #9db4ff;
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.nav-btn.active { background: #16235a; color: #fff; }
+
+.settings {
+  padding: 12px 16px;
+  background: #0d1740;
+  border-bottom: 1px solid #1f2f6b;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 13px;
+  color: #cfe0ff;
+}
+.settings label { display: flex; flex-direction: column; gap: 4px; }
+.settings select {
+  background: #050b1f;
+  color: #fff;
+  border: 1px solid #1f2f6b;
+  border-radius: 8px;
+  padding: 6px;
+}
+.settings .hint { color: #ffcf8a; font-size: 12px; }
+.preview-btn {
+  align-self: flex-start;
+  background: #3b6cff;
+  color: #fff;
+  border: none;
+  border-radius: 16px;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+
+/* ---- Step 7: small phones ---- */
+@media (max-width: 420px) {
+  .navbar { padding: 10px 12px; }
+  .logo { font-size: 17px; }
+  .nav-btn { margin-left: 6px; padding: 4px 8px; font-size: 12px; }
+  .lang { padding: 4px 6px; font-size: 12px; }
+  .bubble { max-width: 88%; }
+  .mic { width: 68px; height: 68px; font-size: 26px; }
+}
